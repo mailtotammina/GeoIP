@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Get Device Cellular Network </title>
+  <title>Get Device Cellular Network</title>
 </head>
 <body>
   <p>Device Cellular Network: <span id="mobile-network"></span></p>
@@ -11,7 +11,7 @@
     const proxyUrl = 'https://api.allorigins.win/get?url=';
     const targetUrl = 'https://freegeoip.app/json/';
 
-    fetch(proxyUrl + encodeURIComponent(targetUrl))
+    fetch(proxyUrl + encodeURIComponent(targetUrl), { timeout: 5000 })
       .then(function(response) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
