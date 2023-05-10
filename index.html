@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Get Device Cellular Network Example</title>
+  </head>
+  <body>
+    <script>
+      fetch('https://freegeoip.app/json/')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log("IP Address: " + data.ip);
+          console.log("Country Code: " + data.country_code);
+          console.log("Region: " + data.region_name);
+          console.log("City: " + data.city);
+          console.log("ISP: " + data.isp);
+          console.log("Mobile Network: " + data.org);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    </script>
+  </body>
+</html>
