@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Get Device Cellular Network</title>
-  </head>
-  <body>
-    <script>
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      const targetUrl = 'https://freegeoip.app/json/';
+<head>
+  <meta charset="UTF-8">
+  <title>Get Device Cellular Network</title>
+</head>
+<body>
+  <p>Device Cellular Network: <span id="mobile-network"></span></p>
 
-      fetch(proxyUrl + targetUrl)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          console.log("IP Address: " + data.ip);
-          console.log("Country Code: " + data.country_code);
-          console.log("Region: " + data.region_name);
-          console.log("City: " + data.city);
-          console.log("ISP: " + data.isp);
-          console.log("Mobile Network: " + data.org);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    </script>
-  </body>
+  <script>
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const targetUrl = 'https://freegeoip.app/json/';
+
+    fetch(proxyUrl + targetUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        document.getElementById('mobile-network').textContent = data.org;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  </script>
+</body>
 </html>
