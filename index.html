@@ -13,13 +13,20 @@
 
     fetch(proxyUrl + encodeURIComponent(targetUrl))
       .then(function(response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         return response.json();
       })
       .then(function(data) {
+        if (!data || !data.contents || !data.contents.org) {
+          throw new Error('Unexpected data format');
+        }
         document.getElementById('mobile-network').textContent = data.contents.org;
       })
       .catch(function(error) {
-        console.log(error);
+        console.error(error);
+        document.getElementById('mobile-network').textContent = 'Unknown';
       });
   </script>
 </body>
