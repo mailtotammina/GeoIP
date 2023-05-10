@@ -5,18 +5,18 @@
   <title>Get Device Cellular Network</title>
 </head>
 <body>
-  <p>Device Cellular Network : <span id="mobile-network"></span></p>
+  <p>Device Cellular Network: <span id="mobile-network"></span></p>
 
   <script>
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const proxyUrl = 'https://api.allorigins.win/get?url=';
     const targetUrl = 'https://freegeoip.app/json/';
 
-    fetch(proxyUrl + targetUrl)
+    fetch(proxyUrl + encodeURIComponent(targetUrl))
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
-        document.getElementById('mobile-network').textContent = data.org;
+        document.getElementById('mobile-network').textContent = data.contents.org;
       })
       .catch(function(error) {
         console.log(error);
