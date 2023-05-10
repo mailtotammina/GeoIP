@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Get Device Network Example</title>
+    <meta charset="UTF-8">
+    <title>Get Device Cellular Network</title>
   </head>
   <body>
     <script>
-      fetch('https://freegeoip.app/json/')
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      const targetUrl = 'https://freegeoip.app/json/';
+
+      fetch(proxyUrl + targetUrl)
         .then(function(response) {
           return response.json();
         })
