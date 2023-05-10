@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Get Device Cellular Network</title>
-</head>
-<body>
-  <p>Device Cellular Network: <span id="mobile-network"></span></p>
+  <head>
+    <meta charset="utf-8">
+    <title>Device Cellular Network</title>
+  </head>
+  <body>
+    <h1>Device Cellular Network:</h1>
+    <p id="network"></p>
+    <h1>Device Location:</h1>
+    <p id="location"></p>
+    <h1>Device Address:</h1>
+    <p id="address"></p>
+    <script>
+      const networkElement = document.getElementById("network");
+      const locationElement = document.getElementById("location");
+      const addressElement = document.getElementById("address");
 
-  <script>
-    const proxyUrl = 'https://api.allorigins.win/get?url=';
-    const targetUrl = 'https://freegeoip.app/json/';
-
-    fetch(proxyUrl + encodeURIComponent(targetUrl))
-      .then(function(response) {
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        console.log('API response:', data);
-        if (!data || !data.contents || !data.contents.org) {
-          throw new Error('Unexpected data format');
-        }
-        document.getElementById('mobile-network').textContent = data.contents.org;
-      })
-      .catch(function(error) {
-        console.error(error);
-        document.getElementById('mobile-network').textContent = 'Unknown';
-      });
-  </script>
-</body>
+      fetch('https://freegeoip.app/json/')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          const network = data.isp;
+          const location = data.latitude + ', ' + data.longitude;
+          const address = data.city + ', ' + data.region_code + ', ' + data.country_name;
+          networkElement.textContent = network;
+          locationElement.textContent = location;
+          addressElement.textContent = address;
+        })
+        .catch(error => {
+          console.error('There was an error with the fetch operation:', error);
+        });
+    </script>
+  </body>
 </html>
