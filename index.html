@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Device Cellular Network</title>
-  </head>
-  <body>
-    <h1>Device Cellular Network:</h1>
-    <p id="network"></p>
-    <h1>Device Location:</h1>
-    <p id="location"></p>
-    <h1>Device Address:</h1>
-    <p id="address"></p>
-    <script>
-      const networkElement = document.getElementById("network");
-      const locationElement = document.getElementById("location");
-      const addressElement = document.getElementById("address");
+<head>
+	<title>Device Cellular Network</title>
+</head>
+<body>
+	<h1>Device Cellular Network:</h1>
+	<p>Country: <span id="country"></span></p>
+	<p>Region: <span id="region"></span></p>
+	<p>City: <span id="city"></span></p>
+	<p>Postal Code: <span id="postal-code"></span></p>
+	<p>Time Zone: <span id="time-zone"></span></p>
+	<p>Latitude: <span id="latitude"></span></p>
+	<p>Longitude: <span id="longitude"></span></p>
 
-      const proxyUrl = "https://api.allorigins.win/get?url=";
-      const apiUrl = "https://freegeoip.app/json/";
-
-      fetch(proxyUrl + encodeURIComponent(apiUrl))
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          const network = data.isp;
-          const location = data.latitude + ', ' + data.longitude;
-          const address = data.city + ', ' + data.region_code + ', ' + data.country_name;
-          networkElement.textContent = network;
-          locationElement.textContent = location;
-          addressElement.textContent = address;
-        })
-        .catch(error => {
-          console.error('There was an error with the fetch operation:', error);
-        });
-    </script>
-  </body>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			fetch("https://api.allorigins.win/get?url=https%3A%2F%2Ffreegeoip.app%2Fjson%2F")
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+					const response = JSON.parse(data.contents);
+					console.log(response);
+					document.getElementById("country").textContent = response.country_name;
+					document.getElementById("region").textContent = response.region_name;
+					document.getElementById("city").textContent = response.city;
+					document.getElementById("postal-code").textContent = response.zip_code;
+					document.getElementById("time-zone").textContent = response.time_zone;
+					document.getElementById("latitude").textContent = response.latitude;
+					document.getElementById("longitude").textContent = response.longitude;
+				})
+				.catch(error => {
+					console.log(error);
+					document.getElementById("country").textContent = "Error";
+					document.getElementById("region").textContent = "Error";
+					document.getElementById("city").textContent = "Error";
+					document.getElementById("postal-code").textContent = "Error";
+					document.getElementById("time-zone").textContent = "Error";
+					document.getElementById("latitude").textContent = "Error";
+					document.getElementById("longitude").textContent = "Error";
+				});
+		});
+	</script>
+</body>
 </html>
